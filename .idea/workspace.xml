@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6dd33c42-f8ff-4bb4-88ac-04db3d56ec99" name="Default Changelist" comment="" />
+    <list default="true" id="6dd33c42-f8ff-4bb4-88ac-04db3d56ec99" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/templates/index/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index/index.html" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,8 +121,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/index/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="291">
-              <caret line="53" column="10" lean-forward="true" selection-start-line="53" selection-start-column="10" selection-end-line="53" selection-end-column="10" />
+            <state relative-caret-position="255">
+              <caret line="50" column="4" selection-start-line="50" selection-start-column="4" selection-end-line="50" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -202,11 +204,11 @@
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/1332f6c0-c78b-4775-be80-bf0e90ec9560/console.sql" />
         <option value="$PROJECT_DIR$/myapp/models.py" />
         <option value="$PROJECT_DIR$/myapp/views.py" />
-        <option value="$PROJECT_DIR$/templates/index/index.html" />
         <option value="$PROJECT_DIR$/templates/base/base.html" />
         <option value="$PROJECT_DIR$/templates/cart/cart.html" />
         <option value="$PROJECT_DIR$/templates/market/market.html" />
         <option value="$PROJECT_DIR$/templates/mine/mine.html" />
+        <option value="$PROJECT_DIR$/templates/index/index.html" />
       </list>
     </option>
   </component>
@@ -355,6 +357,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="202" y="31" width="1146" height="731" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23822464" />
@@ -569,8 +572,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/index/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="53" column="10" lean-forward="true" selection-start-line="53" selection-start-column="10" selection-end-line="53" selection-end-column="10" />
+        <state relative-caret-position="255">
+          <caret line="50" column="4" selection-start-line="50" selection-start-column="4" selection-end-line="50" selection-end-column="4" />
         </state>
       </provider>
     </entry>
