@@ -15,6 +15,7 @@
     <script src="{% static 'base/js/bootstrap.js' %}"></script>
     <script src="{% static 'base/js/swiper.js' %}"></script>
     <script src="{% static 'base/js/base.js' %}"></script>
+    <script src="{% static 'base/js/jquery.cookie.js' %}"></script>
 
     {% block extjs %}
     {% endblock %}
@@ -52,7 +53,7 @@
         </dl>
     </a>
 
-    <a href="{% url 'myapp:market' %}" class="market">
+    <a href="{% url 'myapp:market' 104749 0 0 %}" class="market">
         <dl>
             <dt><span></span></dt>
             <dd>闪购超市</dd>
