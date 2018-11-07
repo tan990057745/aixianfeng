@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 
-from myapp.models import Wheel, Nav, Mustbuy, Shop, MainShow, Goods, Foodtypes, User
+from myapp.models import Wheel, Nav, Mustbuy, Shop, MainShow, Goods, Foodtypes, User, Cart
 
 
 def index(request):
@@ -78,19 +78,36 @@ def market(request,categoryid, childid, sortid):
     elif sortid == '3':  # 价格最高
         goodsList = goodsList.order_by(('-price'))
 
+    # 购物车数据
+    token = request.session.get('token')
+    carts = []
+    if token:
+        user = User.objects.get(token=token)
+        carts = Cart.objects.filter(user=user)
+
     data = {
         'foodtypes': foodtypes,  # 分类信息
         'goodsList': goodsList,  # 商品信息
         'childTypleList': childTypleList,  # 子类信息
         'categoryid': categoryid,  # 分类ID
         'childid': childid,  # 子类ID
+        'carts':carts,
     }
 
     return render(request,'market/market.html',context=data)
 
 
 def cart(request):
-    return render(request,'cart/cart.html')
+    token = request.session.get('token')
+    if token:  # 显示该用户下 购物车信息
+        user = User.objects.get(token=token)
+        carts = Cart.objects.filter(user=user).exclude(number=0)
+
+        return render(request, 'cart/cart.html', context={'carts': carts})
+    else:  # 跳转到登录页面
+        return redirect('myapp:login')
+
+
 
 ###我的页面
 def mine(request):
@@ -195,3 +212,64 @@ def checkaccount(request):
 def logout(request):
     request.session.flush()
     return redirect('myapp:mine')
+
+
+
+##购物车加操作
+def addcart(request):
+    goodsid = request.GET.get('goodsid')
+    token = request.session.get('token')
+
+    responseData = {
+        'msg': '添加购物车成功',
+        'status': 1  # 1标识添加成功，0标识添加失败，-1标识未登录
+    }
+
+    if token:  # 登录 [直接操作模型]
+        # 获取用户
+        user = User.objects.get(token=token)
+        # 获取商品
+        goods = Goods.objects.get(pk=goodsid)
+
+        # 商品已经在购物车，只修改商品个数
+        # 商品不存在购物车，新建对象（加入一条新的数据）
+        carts = Cart.objects.filter(user=user).filter(goods=goods)
+        if carts.exists():  # 修改数量
+            cart = carts.first()
+            cart.number = cart.number + 1
+            cart.save()
+            responseData['number'] = cart.number
+        else:  # 添加一条新记录
+            cart = Cart()
+            cart.user = user
+            cart.goods = goods
+            cart.number = 1
+            cart.save()
+            responseData['number'] = cart.number
+        return JsonResponse(responseData)
+    else:
+        responseData['msg'] = '未登录，请登录后操作'
+        responseData['status'] = -1
+        return JsonResponse(responseData)
+
+##购物车减操作
+def subcart(request):
+    token = request.session.get('token')
+    goodsid = request.GET.get('goodsid')
+
+    # 对应用户 和 商品
+    user = User.objects.get(token=token)
+    goods = Goods.objects.get(pk=goodsid)
+
+    # 删减操作
+    cart = Cart.objects.filter(user=user).filter(goods=goods).first()
+    cart.number = cart.number - 1
+    cart.save()
+
+    responseData = {
+        'msg': '购物车减操作成功',
+        'status': 1,
+        'number': cart.number
+    }
+
+    return JsonResponse(responseData)

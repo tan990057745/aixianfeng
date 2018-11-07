@@ -116,3 +116,15 @@ class User(models.Model):
 
     class Meta:
         db_table = 'axf_user'
+
+
+class Cart(models.Model):
+    user = models.ForeignKey(User)
+    # 商品
+    goods = models.ForeignKey(Goods)
+    # 商品数量(选择)
+    number = models.IntegerField()
+    # 是否选中
+    isselect = models.BooleanField(default=True)
+    class Meta:
+        db_table = 'axf_cart'
