@@ -1,5 +1,143 @@
 {% extends 'base/base.html' %}
 {% load static %}
+
+{% block extcss %}
+    <link rel="stylesheet" href="{% static 'mine/css/mine.css' %}">
+{% endblock %}
+{% block extjs %}
+    <script src="{% static 'mine/js/mine.js' %}"></script>
+{% endblock %}
+
 {% block titile %}
     爱鲜蜂 | 我的
+{% endblock %}
+
+{% block content %}
+{#该界面主要实现登录、注册、退出功能的跳转#}
+    <div class="mine">
+        {#        第一个模块#}
+        <div class="user-wrapper">
+
+            {#            用户头像#}
+            <div class="user-img">
+                <img src="{{ img }}" alt="">
+            </div>
+
+
+            <div class="user-content">
+                {#                登录按钮#}
+                <p>
+                    <a href="{% url 'myapp:login' %}">
+                        <span class="glyphicon glyphicon-user"></span>
+                        {{ name }}
+                    </a>
+                </p>
+
+                {#                等级显示#}
+                <p>
+                    <span class="glyphicon glyphicon-certificate "></span>
+                    VIP: {{ rank | default:'暂无等级' }}
+                </p>
+                {#                注册#}
+                <a href="{% url 'myapp:registe' %}" class="register">注册</a>
+            </div>
+        </div>
+
+        {#        商品收藏#}
+        <div class="collect">
+            <span class="glyphicon glyphicon-pushpin "></span>
+            <i>收藏</i>
+        </div>
+        {#查看订单#}
+        <div class="other">
+            <section class="my">
+                <span>我的订单</span>
+                <a href="#"> 查看订单 <b class="glyphicon glyphicon-chevron-right"></b> </a>
+            </section>
+
+            {#        第二个大模块部分，a标签暂时不用实现功能#}
+            <section>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <dl>
+                                <dt><b class="glyphicon glyphicon-shopping-cart"></b></dt>
+                                <dd> 待付款</dd>
+                            </dl>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <dl>
+                                <dt><b class="glyphicon glyphicon-thumbs-up"></b></dt>
+                                <dd> 待收货</dd>
+                            </dl>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <dl>
+                                <dt><b class="glyphicon glyphicon-bell
+glyphicon"></b></dt>
+                                <dd> 待评价</dd>
+                            </dl>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <dl>
+                                <dt><b class=" glyphicon glyphicon-bullhorn"></b></dt>
+                                <dd> 退款</dd>
+                            </dl>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+
+            {#        第三个大模块#}
+            <section>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <dl>
+                                <dt><b class="glyphicon glyphicon-compressed"></b></dt>
+                                <dd> 优惠券</dd>
+                            </dl>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <dl>
+                                <dt><b class="glyphicon glyphicon-earphone"></b></dt>
+                                <dd> 收货地址</dd>
+                            </dl>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <dl>
+                                <dt><b class="glyphicon glyphicon-phone-alt"></b></dt>
+                                <dd> 客户反馈</dd>
+                            </dl>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <dl>
+                                <dt><b class="glyphicon glyphicon-stats"></b></dt>
+                                <dd> 关于我们</dd>
+                            </dl>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+            {#登出功能#}
+            {% if isLogin %}
+                <section class="quit">
+                    <a href="/logout/">退出</a>
+                </section>
+            {% endif %}
+        </div>
+    </div>
+
 {% endblock %}

@@ -15,7 +15,6 @@ $(function () {
         $.cookie('typeIndex', $(this).index(), {expires:3, path:'/'})
     })
 
-
     // 分类按钮
     categoryBt = false  // 默认是隐藏
     $('#categoryBt').click(function () {

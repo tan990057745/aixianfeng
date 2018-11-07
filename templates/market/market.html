@@ -89,12 +89,12 @@
                     {% endfor %}
                 </ul>
             </div>
-            {#        按照categoryid/childid显示子类名字#}
+            {#        按照categoryid/childid显示childname#}
             <div class="bounce-view category-view">
                 <div class="bounce-wrapper">
                     {% for child in childTypleList %}
                         <a href="{% url 'myapp:market' categoryid child.childid 0 %}">
-                            {{ child.childname }}
+                            {{ child.childname}}
                         </a>
                     {% endfor %}
                 </div>
