@@ -16,4 +16,10 @@ urlpatterns = [
 
     url(r'^addcart/$', views.addcart, name='addcart'),  # 添加购物车
     url(r'^subcart/$', views.subcart, name='subcart'),  # 购物车减操作
+
+    url(r'^changecartstatus/$', views.changecartstatus, name='changecartstatus'),  # 购物车商品是否选中
+    url(r'^generateorder/$', views.generateorder, name='generateorder'),    #下单
+    url(r'^orderinfo/(\d+)/$', views.orderinfo, name='orderinfo'),    #订单详情
+    url(r'changecartselect/$', views.changecartselect,name='changecartselect'), # 全选/取消全选
+
 ]

@@ -1,6 +1,9 @@
 import hashlib
 import os
+import random
+import time
 import uuid
+
 
 from django.conf import settings
 from django.http import JsonResponse
@@ -8,7 +11,7 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 
-from myapp.models import Wheel, Nav, Mustbuy, Shop, MainShow, Goods, Foodtypes, User, Cart
+from myapp.models import Wheel, Nav, Mustbuy, Shop, MainShow, Goods, Foodtypes, User, Cart, OrderGoods, Order
 
 
 def index(request):
@@ -273,3 +276,64 @@ def subcart(request):
     }
 
     return JsonResponse(responseData)
+
+    #购物车商品是否选中
+def changecartstatus(request):
+    cartid = request.GET.get('cartid')
+    cart = Cart.objects.get(pk=cartid)
+    cart.isselect = not cart.isselect
+    cart.save()
+    responseData = {
+        'msg': '选中状态改变',
+        'status': 1,
+        'isselect': cart.isselect
+    }
+    return JsonResponse(responseData)
+
+    #下单
+def generateorder(request):
+    token = request.session.get('token')
+    user = User.objects.get(token=token)
+    # 生成订单
+    order = Order()
+    order.user = user
+    order.identifier = str(int(time.time())) + str(random.randrange(10000,100000))
+    order.save()
+
+    # 订单商品
+    carts = Cart.objects.filter(user=user).filter(isselect=True)
+    for cart in carts:
+        orderGoods = OrderGoods()
+        orderGoods.order = order
+        orderGoods.goods = cart.goods
+        orderGoods.number = cart.number
+        orderGoods.save()
+        # 从购物车移除
+        cart.delete()
+    responseData = {
+        'msg':'订单生成成功',
+        'status': 1,
+        'identifier': order.identifier
+    }
+    return JsonResponse(responseData)
+
+    #订单详情
+def orderinfo(request, identifier):
+    # 一个订单 对应 多个商品
+    order = Order.objects.get(identifier=identifier)
+    return render(request, 'order/orderinfo.html', context={'order':order})
+
+    #全选
+def changecartselect(request):
+    isselect = request.GET.get('isselect')
+    if isselect == 'true':
+        isselect = True
+    else:
+        isselect = False
+    token = request.session.get('token')
+    user = User.objects.get(token=token)
+    carts = Cart.objects.filter(user=user)
+    for cart in carts:
+        cart.isselect = isselect
+        cart.save()
+    return JsonResponse({'msg':'反选操作成功', 'status':1})
